@@ -1,0 +1,39 @@
+body {
+    
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: row;
+    
+ 
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+}
+
+section{
+    color: black;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+}
+.contenedor-lista {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+}
+
+.contenedor-central, section {
+    background-color: aliceblue;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 300px;
+}
+input{
+    background-color: rgb(154, 154, 154);
+}
+
+
