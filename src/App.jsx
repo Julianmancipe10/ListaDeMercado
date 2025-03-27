@@ -6,6 +6,7 @@ import { createBrowserRouter,RouterProvider} from "react-router-dom";
 import InicioSesion from "./InicioSesion/InicioSesion";
 import Home from "./Pages/Home";
 import InicioSesion2 from "./InicioSesion2/InicioSesion2";
+import Reportes from "./Reportes/Reportes";
 
 
 function App() {
@@ -28,6 +29,10 @@ function App() {
       {
         path:"/registrer",
         element:<InicioSesion2></InicioSesion2>
+      },
+      {
+        path:"/reportes",
+        element:<Reportes></Reportes>
       }
 
     ])

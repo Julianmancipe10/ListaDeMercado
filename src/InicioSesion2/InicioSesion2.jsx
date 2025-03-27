@@ -1,85 +1,138 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { signInWithPopup } from "firebase/auth";
-import { auth,googleProvider } from "../firebase/firebaseConfig";
+import { createUserWithEmailAndPassword, updateProfile, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider, githubProvider, facebookProvider } from "../firebase/firebaseConfig";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; 
+import { useNavigate } from "react-router-dom";
 import "./InicioSesion2.css";
 
 function InicioSesion2() {
-  const { register, handleSubmit, reset } = useForm(); 
+  const { register, handleSubmit, reset, watch } = useForm(); 
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
+  const navigate=useNavigate();
 
+
+  // Registrar usuario con Email y Contraseña
+  const onSubmit = async (data) => {
+    if (data.password !== data.confirmPassword) {
+        setError("Las contraseñas no coinciden");
+        return;
+    }
+
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+        const user = userCredential.user;
+
+        let photoURL = "";
+        if (data.file[0]) {
+            const storage = getStorage();
+            const storageRef = ref(storage, `profilePictures/${user.uid}`);
+            await uploadBytes(storageRef, data.file[0]);
+            photoURL = await getDownloadURL(storageRef);
+        }
+
+        await updateProfile(user, { displayName: data.name, photoURL });
+
+        setSuccessMessage("Registro exitoso. ¡Bienvenido!");
+        reset();
+
+        console.log("Usuario registrado, redirigiendo...");
+        navigate("/lista"); // 🔹 Redirigir después de registrar y actualizar perfil
+    } catch (error) {
+        if (error.code === "auth/email-already-in-use") {
+            setError("El correo ya está registrado. Inicia sesión o usa otro email.");
+        } else {
+            setError("Error al registrar usuario: " + error.message);
+        }
+        console.error("Error:", error);    
+    }
+};
+
+
+
+  //Autenticación con Google
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log("User authenticated with Google:", result.user);
+      console.log("Usuario autenticado con Google:", result.user);
+      navigate("/lista"); // de registrar el usuario
     } catch (error) {
-      console.error("Error authenticating with Google:", error);
+      setError(error.message);
+      console.error("Error autenticando con Google:", error);
     }
   };
 
+  // 🔹 Autenticación con Facebook
   const handleFacebookSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, facebookProvider);
-      console.log("User authenticated with Facebook:", result.user);
+      console.log("Usuario autenticado con Facebook:", result.user);
+      navigate("/lista");
     } catch (error) {
-      console.error("Error authenticating with Facebook:", error);
+      setError(error.message);
+      console.error("Error autenticando con Facebook:", error);
     }
   };
 
+  //Autenticación con GitHub
   const handleGithub = async () => {
     try {
-      const githubProvider = new GithubAuthProvider(); 
       const result = await signInWithPopup(auth, githubProvider);
-      console.log("User authenticated with GitHub:", result.user);
+      console.log("Usuario autenticado con GitHub:", result.user);
+      navigate("/lista");
     } catch (error) {
-      console.error("Error authenticating with GitHub:", error.message);
+      setError(error.message);
+      console.error("Error autenticando con GitHub:", error);
     }
-  };
-
-  const onSubmit = (data) => {
-    console.log("Form submitted:", data);
-    reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="name">Name</label>
-      <input type="text" {...register("name")} required />
+    <div>
+      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <label htmlFor="email">Email</label>
-      <input type="email" {...register("email")} required />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="name">Nombre</label>
+        <input type="text" {...register("name")} required />
 
-      <label htmlFor="password">Password</label>
-      <input type="password" {...register("password")} required />
+        <label htmlFor="email">Email</label>
+        <input type="email" {...register("email")} required />
 
-      <label htmlFor="confirmPassword">Confirm Password</label>
-      <input type="password" {...register("confirmPassword")} required />
+        <label htmlFor="password">Contraseña</label>
+        <input type="password" {...register("password")} required />
 
-      <label htmlFor="birthdate">Birthdate</label>
-      <input type="date" {...register("birthdate")} required />
+        <label htmlFor="confirmPassword">Confirmar Contraseña</label>
+        <input type="password" {...register("confirmPassword")} required />
 
-      <label htmlFor="country">Country</label>
-      <select {...register("country")} required>
-        <option value="mx">Mexico</option>
-        <option value="co">Colombia</option>
-        <option value="ar">Argentina</option>
-      </select>
+        <label htmlFor="birthdate">Fecha de Nacimiento</label>
+        <input type="date" {...register("birthdate")} required />
 
-      <label htmlFor="file">Profile Picture</label>
-      <input type="file" {...register("file")} required />
+        <label htmlFor="country">País</label>
+        <select {...register("country")} required>
+          <option value="mx">México</option>
+          <option value="co">Colombia</option>
+          <option value="ar">Argentina</option>
+        </select>
 
-      <label htmlFor="terms">Accept Terms</label>
-      <input type="checkbox" {...register("terms")} required />
+        <label htmlFor="file">Foto de Perfil</label>
+        <input type="file" {...register("file")} accept="image/*" />
 
-      <button type="submit">Submit</button>
+        <label htmlFor="terms">
+          <input type="checkbox" {...register("terms")} required />
+          Acepto los términos y condiciones
+        </label>
 
-      <div className="button-container">
-        <p>Or sign in with:</p>
-        <button type="button" onClick={handleGoogleSignIn}>Google</button>
-        <button type="button" onClick={handleFacebookSignIn}>Facebook</button>
-        <button type="button" onClick={handleGithub}>GitHub</button>
+        <button type="submit">Registrarse</button>
 
-      </div>
-    </form>
+        <div className="button-container">
+          <p>O inicia sesión con:</p>
+          <button type="button" onClick={handleGoogleSignIn}>Google</button>
+          <button type="button" onClick={handleFacebookSignIn}>Facebook</button>
+          <button type="button" onClick={handleGithub}>GitHub</button>
+        </div>
+      </form>
+    </div>
   );
 }
 export default InicioSesion2;
