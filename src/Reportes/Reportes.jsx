@@ -74,8 +74,7 @@ export const Reportes = () => {
             .map(([categoria, cantidad]) => ({ categoria, cantidad }));
 
         // Calcular promedio de gasto por compra
-        const promedioGastoPorCompra = listaCompras.length > 0 
-            ? totalGastado / listaCompras.length 
+        const promedioGastoPorCompra = listaCompras.length > 0 ? totalGastado / listaCompras.length 
             : 0;
 
         // Calcular gastos por mes
