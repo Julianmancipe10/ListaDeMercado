@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
-import "./FomatMarket.css";
 import Reportes from "../Reportes/Reportes"
 import { db } from "../firebase/firebaseConfig";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
@@ -224,125 +223,234 @@ const handleFilterByCategory = (category) => {
     }
 
     return (
-        <div className="contenedor-lista">
-            <h1>Bienvenido, {user.email}</h1>
-            <button className="btn-LogOut" onClick={handleLogout}>Cerrar sesión</button>
-            <button onClick={() =>navigate("/reportes")}>📊 Ver Reportes</button>
-
-            <form onSubmit={handleAddProduct} className="contenedor-central">
-                <h2>{editingProduct !== null ? 'Actualizar Producto' : 'Agregar Producto'}</h2>
-
-                <p>Nombre de la Tienda</p>
-                <input
+        <div className="container mx-auto px-4 py-8 bg-gray-50 min-h-screen">
+          <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
+            {/* Header Section */}
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-2xl font-bold text-gray-800">Bienvenido, {user.email}</h1>
+              <div className="space-x-3">
+                <button 
+                  className="btn-LogOut bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+                  onClick={handleLogout}
+                >
+                  Cerrar sesión
+                </button>
+                <button 
+                  onClick={() => navigate("/reportes")}
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+                >
+                  📊 Ver Reportes
+                </button>
+              </div>
+            </div>
+    
+            {/* Product Form */}
+            <form 
+              onSubmit={handleAddProduct} 
+              className="grid grid-cols-2 gap-4 bg-gray-100 p-6 rounded-lg mb-6"
+            >
+              <div className="col-span-2">
+                <h2 className="text-xl font-semibold mb-4">
+                  {editingProduct !== null ? 'Actualizar Producto' : 'Agregar Producto'}
+                </h2>
+              </div>
+    
+              {/* Form Inputs */}
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-1">Nombre de la Tienda</p>
+                  <input
                     value={storeName}
                     onChange={(e) => setStoreName(e.target.value)}
                     type="text"
                     placeholder="Nombre de la tienda"
-                />
-
-                <p>Nombre Producto</p>
-                <input
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+    
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-1">Nombre Producto</p>
+                  <input
                     value={nameProduct}
                     onChange={(e) => setNameProduct(e.target.value)}
                     type="text"
                     placeholder="Nombre del producto"
-                />
-
-                <p>Precio</p>
-                <input
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+    
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-1">Precio</p>
+                  <input
                     value={priceProduct}
                     onChange={(e) => setPriceProduct(e.target.value)}
                     type="number"
                     placeholder="Precio del producto"
-                />
-
-                <p>Fecha compra</p>
-                <input
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+    
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-1">Fecha compra</p>
+                  <input
                     value={dateProduct}
                     onChange={(e) => setDateProduct(e.target.value)}
                     type="date"
-                />
-
-                <p>Cantidad en Kg</p>
-                <input
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+    
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-1">Cantidad en Kg</p>
+                  <input
                     value={weightProduct}
                     onChange={(e) => setWeightProduct(e.target.value)}
                     type="number"
                     placeholder="Peso en kg"
-                />
-
-                <p>Categoría</p>
-                <select
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+    
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-1">Categoría</p>
+                  <select
                     value={categoryProduct}
                     onChange={(e) => setCategoryProduct(e.target.value)}
-                >
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
                     <option value="">Selecciona una categoría</option>
                     {productCategories.map((category, index) => (
-                        <option key={index} value={category}>{category}</option>
+                      <option key={index} value={category}>{category}</option>
                     ))}
-                </select>
-
+                  </select>
+                </div>
+              </div>
+    
+              {/* Form Buttons */}
+              <div className="col-span-2 flex space-x-4 mt-4">
                 {editingProduct !== null ? (
-                    <button type="button" onClick={handleUpdateProduct}>Actualizar Producto</button>
+                  <button 
+                    type="button" 
+                    onClick={handleUpdateProduct}
+                    className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition-colors"
+                  >
+                    Actualizar Producto
+                  </button>
                 ) : (
-                    <button type="submit">Agregar a la lista</button>
+                  <button 
+                    type="submit"
+                    className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
+                  >
+                    Agregar a la lista
+                  </button>
                 )}
-                <button type="button" onClick={handleSaveList}>Guardar lista</button>
+                <button 
+                  type="button" 
+                  onClick={handleSaveList}
+                  className="w-full bg-indigo-500 text-white py-2 rounded hover:bg-indigo-600 transition-colors"
+                >
+                  Guardar lista
+                </button>
+              </div>
             </form>
-
-            <section>
-                <h2>Lista de Productos</h2>
-                <ul>
-                    {listProduct.map((product, index) => (
-                        <li key={index}>
-                            <p>
-                                {product.store} - {product.name}: ${product.price.toFixed(2)} - {product.weight}kg - {product.date} - Categoría: {product.category}
-                                <button onClick={() => handleEditProduct(index)}>Editar</button>
-                            </p>
-                        </li>
-                    ))}
-                </ul>
-                <h2>Total: ${total.toFixed(2)}</h2>
+    
+            {/* Product List */}
+            <section className="bg-white shadow rounded-lg p-6 mb-6">
+              <h2 className="text-xl font-semibold mb-4">Lista de Productos</h2>
+              <ul className="divide-y divide-gray-200">
+                {listProduct.map((product, index) => (
+                  <li key={index} className="py-4 flex justify-between items-center">
+                    <div>
+                      <p className="text-gray-800">
+                        {product.store} - {product.name}: 
+                        <span className="font-semibold text-green-600 ml-2">
+                          ${product.price.toFixed(2)}
+                        </span>
+                        <span className="ml-2 text-gray-500">
+                          - {product.weight}kg - {product.date} - Categoría: {product.category}
+                        </span>
+                      </p>
+                    </div>
+                    <button 
+                      onClick={() => handleEditProduct(index)}
+                      className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition-colors"
+                    >
+                      Editar
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <h2 className="text-xl font-bold text-right mt-4">Total: ${total.toFixed(2)}</h2>
             </section>
-
-            <h2>Listas Guardadas</h2>
-{savedLists.map((list, index) => (
-    <div key={index} className="saved-list">
-        <h3>{list.store} - Lista {index + 1} - Total: ${list.total.toFixed(2)}</h3>
-        <button onClick={() => handleSelectSavedList(list)}>Seleccionar</button>
-        <button onClick={handleUpdateList}>Actualizar Lista</button>
-        <ul>
-            {list.products.map((product, i) => (
-                <li key={i}>
-                    {product.name}: ${product.price.toFixed(2)} - {product.weight}kg - {product.date} - Categoría: {product.category}
-                </li>
-            ))}
-        </ul>
-    </div>
-))}
-<p>Buscar por Categoría</p>
-<select onChange={(e) => handleFilterByCategory(e.target.value)}>
-    <option value="">Todas</option>
-    {productCategories.map((category, index) => (
-        <option key={index} value={category}>{category}</option>
-    ))}
-</select>
-
-<h2>Productos Filtrados</h2>
-<ul>
-    {filteredProducts.length > 0 ? (
-        filteredProducts.map((product, index) => (
-            <li key={index}>
-                {product.name}: ${product.price.toFixed(2)} - {product.weight}kg - {product.date} - Categoría: {product.category}
-            </li>
-        ))
-    ) : (
-        <p>No hay productos en esta categoría.</p>
-    )}
-</ul>
-
+    
+            {/* Saved Lists */}
+            <div className="bg-white shadow rounded-lg p-6 mb-6">
+              <h2 className="text-xl font-semibold mb-4">Listas Guardadas</h2>
+              {savedLists.map((list, index) => (
+                <div key={index} className="bg-gray-100 rounded-lg p-4 mb-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-lg font-medium">
+                      {list.store} - Lista {index + 1} - Total: ${list.total.toFixed(2)}
+                    </h3>
+                    <div className="space-x-2">
+                      <button 
+                        onClick={() => handleSelectSavedList(list)}
+                        className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors"
+                      >
+                        Seleccionar
+                      </button>
+                      <button 
+                        onClick={handleUpdateList}
+                        className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition-colors"
+                      >
+                        Actualizar Lista
+                      </button>
+                    </div>
+                  </div>
+                  <ul className="divide-y divide-gray-200">
+                    {list.products.map((product, i) => (
+                      <li key={i} className="py-2">
+                        {product.name}: ${product.price.toFixed(2)} - {product.weight}kg - {product.date} - Categoría: {product.category}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+    
+            {/* Category Filter */}
+            <div className="bg-white shadow rounded-lg p-6">
+              <div className="mb-4">
+                <p className="text-sm font-medium text-gray-700 mb-2">Buscar por Categoría</p>
+                <select 
+                  onChange={(e) => handleFilterByCategory(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Todas</option>
+                  {productCategories.map((category, index) => (
+                    <option key={index} value={category}>{category}</option>
+                  ))}
+                </select>
+              </div>
+    
+              <h2 className="text-xl font-semibold mb-4">Productos Filtrados</h2>
+              <ul className="divide-y divide-gray-200">
+                {filteredProducts.length > 0 ? (
+                  filteredProducts.map((product, index) => (
+                    <li key={index} className="py-2">
+                      {product.name}: ${product.price.toFixed(2)} - {product.weight}kg - {product.date} - Categoría: {product.category}
+                    </li>
+                  ))
+                ) : (
+                  <p className="text-gray-500">No hay productos en esta categoría.</p>
+                )}
+              </ul>
+            </div>
+          </div>
         </div>
-    );
+      );
 };
 
 export default FormatMarket;

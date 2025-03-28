@@ -40,9 +40,6 @@ function App() {
 
   return (
     <RouterProvider router={routes}>
-     <Home>
-      
-     </Home>
     </RouterProvider>
   
   );
