@@ -323,47 +323,46 @@ export const Reportes = () => {
         const names = new Set(allProducts.map(product => product.name));
         return [...names];
     };
-
     return (
-        <div className="container mx-auto px-4 py-8 bg-gray-50 min-h-screen">
-            <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-xl p-8">
-                <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-800">Reportes de Compras</h1>
+        <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 bg-gray-50 min-h-screen">
+            <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-xl p-4 sm:p-8">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Reportes de Compras</h1>
                     {user && (
                         <p className="text-gray-600 text-sm">
                             Bienvenido, <span className="font-semibold">{user.email}</span>
                         </p>
                     )}
                 </div>
-
+    
                 {/* Economic Summary */}
-                <section className="bg-blue-50 rounded-lg p-6 mb-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Resumen Económico</h2>
-                    <div className="grid grid-cols-2 gap-4">
+                <section className="bg-blue-50 rounded-lg p-4 sm:p-6 mb-6">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Resumen Económico</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="bg-white shadow rounded-lg p-4">
                             <p className="text-gray-600">Total Gastado</p>
-                            <p className="text-2xl font-bold text-green-600">
+                            <p className="text-xl sm:text-2xl font-bold text-green-600">
                                 ${reporteResumen.totalGastado.toFixed(2)}
                             </p>
                         </div>
                         <div className="bg-white shadow rounded-lg p-4">
                             <p className="text-gray-600">Promedio por Compra</p>
-                            <p className="text-2xl font-bold text-blue-600">
+                            <p className="text-xl sm:text-2xl font-bold text-blue-600">
                                 ${reporteResumen.promedioGastoPorCompra.toFixed(2)}
                             </p>
                         </div>
                     </div>
                 </section>
-
+    
                 {/* Expenses by Month */}
                 <section className="mb-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Gastos por Mes</h2>
-                    <div className="bg-white shadow rounded-lg overflow-hidden">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Gastos por Mes</h2>
+                    <div className="bg-white shadow rounded-lg overflow-x-auto">
                         <table className="w-full">
                             <thead className="bg-gray-100">
                                 <tr>
-                                    <th className="p-4 text-left text-gray-600">Mes/Año</th>
-                                    <th className="p-4 text-right text-gray-600">Total Gastado</th>
+                                    <th className="p-3 text-left text-gray-600">Mes/Año</th>
+                                    <th className="p-3 text-right text-gray-600">Total Gastado</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -379,15 +378,15 @@ export const Reportes = () => {
                                                 key={mesAño} 
                                                 className="border-b last:border-b-0 hover:bg-gray-50 transition-colors"
                                             >
-                                                <td className="p-4 text-gray-800">{mesAño}</td>
-                                                <td className="p-4 text-right font-semibold text-green-600">
+                                                <td className="p-3 text-gray-800">{mesAño}</td>
+                                                <td className="p-3 text-right font-semibold text-green-600">
                                                     ${total.toFixed(2)}
                                                 </td>
                                             </tr>
                                         ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="2" className="p-4 text-center text-gray-500">
+                                        <td colSpan="2" className="p-3 text-center text-gray-500">
                                             No hay gastos registrados
                                         </td>
                                     </tr>
@@ -396,10 +395,10 @@ export const Reportes = () => {
                         </table>
                     </div>
                 </section>
-
+    
                 {/* Top 3 Categories */}
                 <section className="mb-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
                         Top 3 Categorías más Compradas
                     </h2>
                     {reporteResumen.categoriasMasCompradas.length > 0 ? (
@@ -407,10 +406,10 @@ export const Reportes = () => {
                             {reporteResumen.categoriasMasCompradas.map((item, index) => (
                                 <li 
                                     key={index} 
-                                    className="p-4 flex justify-between items-center hover:bg-gray-50 transition-colors"
+                                    className="p-3 sm:p-4 flex justify-between items-center hover:bg-gray-50 transition-colors"
                                 >
                                     <span className="font-medium">{item.categoria}</span>
-                                    <span className="text-gray-600 bg-blue-100 px-3 py-1 rounded-full">
+                                    <span className="text-gray-600 bg-blue-100 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
                                         {item.cantidad} compras
                                     </span>
                                 </li>
@@ -422,12 +421,12 @@ export const Reportes = () => {
                         </p>
                     )}
                 </section>
-
+    
                 {/* Product Filters */}
                 <section className="mb-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Filtrar Productos</h2>
-                    <div className="bg-white shadow rounded-lg p-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Filtrar Productos</h2>
+                    <div className="bg-white shadow rounded-lg p-4 sm:p-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             <div>
                                 <label className="block text-gray-700 mb-2">Nombre del Producto</label>
                                 <input
@@ -435,7 +434,7 @@ export const Reportes = () => {
                                     name="name"
                                     value={filters.name}
                                     onChange={handleFilterChange}
-                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     placeholder="Nombre..."
                                 />
                             </div>
@@ -445,7 +444,7 @@ export const Reportes = () => {
                                     name="brand"
                                     value={filters.brand}
                                     onChange={handleFilterChange}
-                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
                                     <option value="">Todas las marcas</option>
                                     {uniqueBrands.map((brand, index) => (
@@ -459,7 +458,7 @@ export const Reportes = () => {
                                     name="category"
                                     value={filters.category}
                                     onChange={handleFilterChange}
-                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
                                     <option value="">Todas las categorías</option>
                                     {uniqueCategories.map((category, index) => (
@@ -474,7 +473,7 @@ export const Reportes = () => {
                                     name="minPrice"
                                     value={filters.minPrice}
                                     onChange={handleFilterChange}
-                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     placeholder="0.00"
                                     min="0"
                                     step="0.01"
@@ -487,7 +486,7 @@ export const Reportes = () => {
                                     name="maxPrice"
                                     value={filters.maxPrice}
                                     onChange={handleFilterChange}
-                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     placeholder="100.00"
                                     min="0"
                                     step="0.01"
@@ -504,23 +503,23 @@ export const Reportes = () => {
                         </div>
                     </div>
                 </section>
-
+    
                 {/* Product Listing with Activation/Deactivation */}
                 <section className="mb-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
                         Productos ({filteredProducts.length})
                     </h2>
                     {filteredProducts.length > 0 ? (
-                        <div className="bg-white shadow rounded-lg overflow-hidden">
+                        <div className="bg-white shadow rounded-lg overflow-x-auto">
                             <table className="w-full">
                                 <thead className="bg-gray-100">
                                     <tr>
                                         <th className="p-3 text-left text-gray-600">Nombre</th>
-                                        <th className="p-3 text-left text-gray-600">Categoría</th>
-                                        <th className="p-3 text-left text-gray-600">Marca</th>
+                                        <th className="p-3 text-left text-gray-600 hidden sm:table-cell">Categoría</th>
+                                        <th className="p-3 text-left text-gray-600 hidden lg:table-cell">Marca</th>
                                         <th className="p-3 text-right text-gray-600">Precio</th>
-                                        <th className="p-3 text-center text-gray-600">Fecha</th>
-                                        <th className="p-3 text-center text-gray-600">Tienda</th>
+                                        <th className="p-3 text-center text-gray-600 hidden md:table-cell">Fecha</th>
+                                        <th className="p-3 text-center text-gray-600 hidden lg:table-cell">Tienda</th>
                                         <th className="p-3 text-center text-gray-600">Estado</th>
                                         <th className="p-3 text-center text-gray-600">Acciones</th>
                                     </tr>
@@ -532,15 +531,15 @@ export const Reportes = () => {
                                             className={`border-b hover:bg-gray-50 transition-colors ${product.active === false ? 'opacity-50' : ''}`}
                                         >
                                             <td className="p-3">{product.name}</td>
-                                            <td className="p-3">{product.category}</td>
-                                            <td className="p-3">{product.brand || 'N/A'}</td>
+                                            <td className="p-3 hidden sm:table-cell">{product.category}</td>
+                                            <td className="p-3 hidden lg:table-cell">{product.brand || 'N/A'}</td>
                                             <td className="p-3 text-right font-medium">${product.price.toFixed(2)}</td>
-                                            <td className="p-3 text-center">{product.purchaseDate.toLocaleDateString()}</td>
-                                            <td className="p-3 text-center">{product.store || 'N/A'}</td>
+                                            <td className="p-3 text-center hidden md:table-cell">{product.purchaseDate.toLocaleDateString()}</td>
+                                            <td className="p-3 text-center hidden lg:table-cell">{product.store || 'N/A'}</td>
                                             <td className="p-3 text-center">
                                                 {product.active === false ? (
                                                     <span className="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">
-                                                        Desactivado
+                                                        Desact.
                                                     </span>
                                                 ) : (
                                                     <span className="px-2 py-1 bg-green-100 text-green-600 rounded text-xs">
@@ -552,7 +551,7 @@ export const Reportes = () => {
                                                 {product.active !== false ? (
                                                     <button
                                                         onClick={() => deactivateProduct(product.id, product.listId)}
-                                                        className="text-red-500 hover:text-red-700 mx-1 px-2 py-1 rounded text-sm"
+                                                        className="text-red-500 hover:text-red-700 mx-1 px-2 py-1 rounded text-xs sm:text-sm"
                                                         title="Desactivar Producto"
                                                     >
                                                         Desactivar
@@ -560,7 +559,7 @@ export const Reportes = () => {
                                                 ) : (
                                                     <button
                                                         onClick={() => activateProduct(product.id, product.listId)}
-                                                        className="text-green-500 hover:text-green-700 mx-1 px-2 py-1 rounded text-sm"
+                                                        className="text-green-500 hover:text-green-700 mx-1 px-2 py-1 rounded text-xs sm:text-sm"
                                                         title="Activar Producto"
                                                     >
                                                         Activar
@@ -578,19 +577,19 @@ export const Reportes = () => {
                         </p>
                     )}
                 </section>
-
+    
                 {/* Price Comparison */}
                 <section className="mb-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
                         Comparación de Precios por Mes
                     </h2>
-                    <div className="bg-white shadow rounded-lg p-6">
+                    <div className="bg-white shadow rounded-lg p-4 sm:p-6">
                         <div className="mb-4">
                             <label className="block text-gray-700 mb-2">Seleccione un Producto</label>
                             <select
                                 value={selectedProduct}
                                 onChange={(e) => setSelectedProduct(e.target.value)}
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 <option value="">Seleccione un producto</option>
                                 {getUniqueProductNames().map((name, index) => (
@@ -598,13 +597,13 @@ export const Reportes = () => {
                                 ))}
                             </select>
                         </div>
-
+    
                         {selectedProduct && Object.keys(productsComparison).length > 0 ? (
                             <div className="mt-6">
-                                <h3 className="text-lg font-medium mb-3">
+                                <h3 className="text-base sm:text-lg font-medium mb-3">
                                     Precios de "{selectedProduct}" por Mes
                                 </h3>
-                                <div className="bg-gray-50 p-4 rounded-lg">
+                                <div className="bg-gray-50 p-3 sm:p-4 rounded-lg overflow-x-auto">
                                     <table className="w-full">
                                         <thead>
                                             <tr>
@@ -639,21 +638,21 @@ export const Reportes = () => {
                         )}
                     </div>
                 </section>
-
+    
                 {/* Purchase History */}
                 <section className="mb-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Historial de Compras</h2>
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Historial de Compras</h2>
                     {listaCompras.length > 0 ? (
                         <div className="space-y-4">
                             {listaCompras.map((lista) => (
                                 <div 
                                     key={lista.id} 
-                                    className="bg-white shadow rounded-lg p-6 hover:shadow-md transition-shadow"
+                                    className="bg-white shadow rounded-lg p-4 sm:p-6 hover:shadow-md transition-shadow"
                                 >
-                                    <div className="flex justify-between items-center mb-4">
-                                        <h3 className="text-lg font-semibold text-gray-800">
+                                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
+                                        <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-1 sm:mb-0">
                                             {lista.store || 'Sin nombre'} 
-                                            <span className="text-gray-500 text-sm ml-2">
+                                            <span className="text-gray-500 text-xs sm:text-sm ml-2 block sm:inline-block">
                                                 {lista.createdAt ? new Date(lista.createdAt.toDate()).toLocaleDateString() : 'Fecha no disponible'}
                                             </span>
                                         </h3>
@@ -666,23 +665,23 @@ export const Reportes = () => {
                                             {lista.products.map((producto, idx) => (
                                                 <li 
                                                     key={idx} 
-                                                    className={`py-2 flex justify-between items-center ${producto.active === false ? 'opacity-50' : ''}`}
+                                                    className={`py-2 flex flex-col sm:flex-row sm:justify-between sm:items-center ${producto.active === false ? 'opacity-50' : ''}`}
                                                 >
-                                                    <div className="flex items-center">
+                                                    <div className="flex flex-col sm:flex-row sm:items-center mb-2 sm:mb-0">
                                                         <span className="font-medium">{producto.name}</span>
-                                                        <span className="text-gray-500 ml-2">{producto.category}</span>
+                                                        <span className="text-gray-500 mt-1 sm:mt-0 sm:ml-2 text-sm">{producto.category}</span>
                                                         {producto.active === false ? (
-                                                            <span className="ml-2 text-xs bg-red-100 text-red-600 px-2 py-1 rounded">
+                                                            <span className="mt-1 sm:mt-0 sm:ml-2 text-xs bg-red-100 text-red-600 px-2 py-1 rounded inline-block">
                                                                 Desactivado
                                                             </span>
                                                         ) : (
-                                                            <span className="ml-2 text-xs bg-green-100 text-green-600 px-2 py-1 rounded">
+                                                            <span className="mt-1 sm:mt-0 sm:ml-2 text-xs bg-green-100 text-green-600 px-2 py-1 rounded inline-block">
                                                                 Activo
                                                             </span>
                                                         )}
                                                     </div>
-                                                    <div className="flex items-center">
-                                                        <span className="text-blue-600 font-semibold mr-3">
+                                                    <div className="flex items-center justify-between sm:justify-end mt-2 sm:mt-0">
+                                                        <span className="text-blue-600 font-semibold sm:mr-3">
                                                             ${producto.price.toFixed(2)}
                                                         </span>
                                                         {producto.active === false ? (
@@ -695,42 +694,42 @@ export const Reportes = () => {
                                                             </button>
                                                         ) : (
                                                             <button
-                                                            onClick={() => deactivateProduct(producto.id, lista.id)}
-                                                            className="text-red-500 hover:text-red-700 text-sm"
-                                                            title="Desactivar Producto"
-                                                        >
-                                                            Desactivar
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                ) : (
-                                    <p className="text-gray-500">No hay productos en esta lista</p>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <p className="text-gray-500 bg-white shadow rounded-lg p-4 text-center">
-                        No hay compras registradas
-                    </p>
-                )}
-            </section>
-
-            {/* Navigation Button */}
-            <div className="flex justify-center mt-8">
-                <button 
-                    onClick={() => navigate("/lista")}
-                    className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors shadow-md"
-                >
-                    Volver a Lista de Compras
-                </button>
+                                                                onClick={() => deactivateProduct(producto.id, lista.id)}
+                                                                className="text-red-500 hover:text-red-700 text-sm"
+                                                                title="Desactivar Producto"
+                                                            >
+                                                                Desactivar
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p className="text-gray-500">No hay productos en esta lista</p>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-gray-500 bg-white shadow rounded-lg p-4 text-center">
+                            No hay compras registradas
+                        </p>
+                    )}
+                </section>
+    
+                {/* Navigation Button */}
+                <div className="flex justify-center mt-6 sm:mt-8">
+                    <button 
+                        onClick={() => navigate("/lista")}
+                        className="bg-blue-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-blue-600 transition-colors shadow-md w-full sm:w-auto"
+                    >
+                        Volver a Lista de Compras
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
 };
 
 export default Reportes;
