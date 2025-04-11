@@ -7,7 +7,8 @@ export default function Home() {
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col items-center justify-center p-4">
             <header className="mb-12 text-center">
                 <img 
-                    src="../assets/Images/icono.jpg" 
+                   src="/public/assets/Images/icono.jpg"
+ 
                     alt="App Icon" 
                     className="mx-auto w-24 h-24 rounded-full shadow-lg mb-4 object-cover"
                 />
