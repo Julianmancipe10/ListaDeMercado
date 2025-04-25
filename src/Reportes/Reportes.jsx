@@ -326,6 +326,7 @@ export const Reportes = () => {
     return (
         <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 bg-gray-50 min-h-screen">
             <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-xl p-4 sm:p-8">
+                {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8">
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Reportes de Compras</h1>
                     {user && (
@@ -439,20 +440,6 @@ export const Reportes = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-gray-700 mb-2">Marca</label>
-                                <select
-                                    name="brand"
-                                    value={filters.brand}
-                                    onChange={handleFilterChange}
-                                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                >
-                                    <option value="">Todas las marcas</option>
-                                    {uniqueBrands.map((brand, index) => (
-                                        <option key={index} value={brand}>{brand}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div>
                                 <label className="block text-gray-700 mb-2">Categoría</label>
                                 <select
                                     name="category"
@@ -516,7 +503,6 @@ export const Reportes = () => {
                                     <tr>
                                         <th className="p-3 text-left text-gray-600">Nombre</th>
                                         <th className="p-3 text-left text-gray-600 hidden sm:table-cell">Categoría</th>
-                                        <th className="p-3 text-left text-gray-600 hidden lg:table-cell">Marca</th>
                                         <th className="p-3 text-right text-gray-600">Precio</th>
                                         <th className="p-3 text-center text-gray-600 hidden md:table-cell">Fecha</th>
                                         <th className="p-3 text-center text-gray-600 hidden lg:table-cell">Tienda</th>
@@ -532,7 +518,6 @@ export const Reportes = () => {
                                         >
                                             <td className="p-3">{product.name}</td>
                                             <td className="p-3 hidden sm:table-cell">{product.category}</td>
-                                            <td className="p-3 hidden lg:table-cell">{product.brand || 'N/A'}</td>
                                             <td className="p-3 text-right font-medium">${product.price.toFixed(2)}</td>
                                             <td className="p-3 text-center hidden md:table-cell">{product.purchaseDate.toLocaleDateString()}</td>
                                             <td className="p-3 text-center hidden lg:table-cell">{product.store || 'N/A'}</td>
@@ -729,7 +714,6 @@ export const Reportes = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    );}
 
 export default Reportes;
